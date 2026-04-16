@@ -1,0 +1,8 @@
+div {
+  transition: background-color 0.2s;
+}
+
+div:hover {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}

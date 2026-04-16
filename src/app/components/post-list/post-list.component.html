@@ -1,0 +1,20 @@
+<div class="container py-4">
+  @if (errorMessage) {
+  <div class="alert alert-danger">{{ errorMessage }}</div>
+  }
+  @if (posts.length) {
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      @for (post of posts; track post.id) {
+      <app-post-list-item [post]="post"></app-post-list-item>
+      <hr class="my-1">
+      }
+    </div>
+  </div>
+  } @else {
+  <div class="text-center text-muted mt-5">
+    <i class="bi bi-journal-x fs-1"></i>
+    <p class="mt-2">No posts available yet.</p>
+  </div>
+  }
+</div>
