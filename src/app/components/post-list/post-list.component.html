@@ -1,20 +1,22 @@
-<div class="container py-4">
-  @if (errorMessage) {
-  <div class="alert alert-danger">{{ errorMessage }}</div>
-  }
-  @if (posts.length) {
-  <div class="row justify-content-center">
-    <div class="col-md-8">
-      @for (post of posts; track post.id) {
-      <app-post-list-item [post]="post"></app-post-list-item>
-      <hr class="my-1">
-      }
+<div class="container py-4" style="max-width: 780px;">
+
+  <div *ngIf="isLoading" class="d-flex justify-content-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
     </div>
   </div>
-  } @else {
-  <div class="text-center text-muted mt-5">
-    <i class="bi bi-journal-x fs-1"></i>
-    <p class="mt-2">No posts available yet.</p>
+
+  <div *ngIf="!isLoading && errorMessage" class="alert alert-danger rounded-3">
+    {{ errorMessage }}
   </div>
-  }
+
+  <div *ngIf="!isLoading && !errorMessage && posts.length === 0"
+       class="text-center text-muted py-5">
+    <p class="fs-5">No posts yet. Be the first to write one!</p>
+  </div>
+
+  <ng-container *ngIf="!isLoading && !errorMessage && posts.length > 0">
+    <app-post-list-item *ngFor="let post of posts" [post]="post"></app-post-list-item>
+  </ng-container>
+
 </div>

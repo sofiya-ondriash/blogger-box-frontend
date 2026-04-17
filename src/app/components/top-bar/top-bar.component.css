@@ -1,3 +1,29 @@
+nav {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #e9ecef !important;
+  padding: 12px 24px;
+}
+
 .navbar-brand {
   font-size: 1.3rem;
+  font-weight: 700;
+  color: #1a1a2e !important;
+  letter-spacing: -0.3px;
+  text-decoration: none;
+}
+
+.btn-write {
+  background-color: #4f8ef7;
+  color: #ffffff;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 18px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: background-color 0.15s ease;
+}
+
+.btn-write:hover {
+  background-color: #3a7bd5;
+  color: #ffffff;
 }

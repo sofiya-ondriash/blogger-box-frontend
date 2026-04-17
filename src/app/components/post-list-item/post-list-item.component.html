@@ -1,16 +1,17 @@
-@if (post) {
-<div class="py-3 px-2">
-  <h5 class="fw-bold mb-1">{{ post.title }}</h5>
-  <p class="text-muted mb-2">{{ post.content }}</p>
-  <div class="d-flex align-items-center gap-2">
-    @if (post.category) {
-    <span class="badge bg-light text-dark border fw-semibold">
-          {{ post.category.name }}
+<div class="post-card mb-3">
+  <div class="card border-0 shadow-sm h-100">
+    <div class="card-body px-4 py-3">
+      <div class="d-flex justify-content-between align-items-start mb-2">
+        <h5 class="card-title fw-bold mb-0">{{ post.title }}</h5>
+        <span *ngIf="post.category" class="category-badge ms-3">
+          {{ post.category!.name }}
         </span>
-    }
-    <small class="text-muted">
-      {{ post.createdDate | date: 'medium' }}
-    </small>
+      </div>
+      <p class="card-text text-muted mb-3">{{ post.content }}</p>
+      <small class="text-muted">
+
+        {{ post.createdDate | date: 'MMM d, y, h:mm a' }}
+      </small>
+    </div>
   </div>
 </div>
-}

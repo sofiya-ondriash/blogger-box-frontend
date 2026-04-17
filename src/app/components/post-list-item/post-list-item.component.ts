@@ -5,7 +5,7 @@ import { Post } from '../../data/post';
   selector: 'app-post-list-item',
   standalone: false,
   templateUrl: './post-list-item.component.html',
-  styleUrl: './post-list-item.component.css'
+  styleUrls: ['./post-list-item.component.css']
 })
 export class PostListItemComponent {
   @Input() post!: Post;

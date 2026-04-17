@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Post } from '../../data/post';
 import { PostService } from '../../services/post.service';
 
@@ -6,28 +6,32 @@ import { PostService } from '../../services/post.service';
   selector: 'app-post-list',
   standalone: false,
   templateUrl: './post-list.component.html',
-  styleUrl: './post-list.component.css'
+  styleUrls: ['./post-list.component.css']
 })
 export class PostListComponent implements OnInit {
-  posts: Post[] = [];
-  errorMessage: string = '';
 
-  constructor(private postService: PostService) {}
+  posts: Post[] = [];
+  isLoading = true;
+  errorMessage = '';
+
+  constructor(
+    private postService: PostService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
-    this.loadPosts();
-  }
-
-  loadPosts(): void {
-    console.log('Loading posts...');
     this.postService.getAll().subscribe({
-      next: (data) => {
-        console.log('Posts received:', data);
-        this.posts = data;
+      next: (posts) => {
+        this.posts = posts.sort(
+          (a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime()
+        );
+        this.isLoading = false;
+        this.cdr.detectChanges();
       },
-      error: (err) => {
-        console.error('Error loading posts:', err);
-        this.errorMessage = 'Failed to load posts: ' + err.message;
+      error: () => {
+        this.errorMessage = 'Failed to load posts. Please try again later.';
+        this.isLoading = false;
+        this.cdr.detectChanges();
       }
     });
   }

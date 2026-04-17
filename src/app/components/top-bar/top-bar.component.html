@@ -1,10 +1,10 @@
-<nav class="navbar bg-body-tertiary border-bottom px-3">
-  <div class="container-fluid">
-    <a class="navbar-brand fw-bold" [routerLink]="['/']">
-      <i class="bi bi-postcard me-2"></i>Blogger-Box
+<nav class="navbar">
+  <div class="container-fluid px-4">
+    <a [routerLink]="['/home']" class="navbar-brand">
+      Blogger-Box
     </a>
-    <button class="btn btn-outline-success" type="button" [routerLink]="['/create']">
-      <i class="bi bi-pencil-square me-1"></i> Post
-    </button>
+    <a [routerLink]="['/add-post']" class="btn btn-write">
+      Write
+    </a>
   </div>
 </nav>

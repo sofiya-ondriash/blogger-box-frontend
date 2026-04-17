@@ -1,66 +1,107 @@
-<div class="container py-4">
-  <div class="row justify-content-center">
-    <div class="col-md-8">
-      <h2 class="mb-4 fw-bold">Write a new post</h2>
+<div class="container mt-4">
+  <div class="card shadow-sm">
 
-      @if (errorMessage) {
-      <div class="alert alert-danger">{{ errorMessage }}</div>
-      }
 
-      <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+    <div class="card-header d-flex justify-content-between align-items-center bg-light">
+      <span class="fw-semibold fs-5">Blogger-Box</span>
+      <button type="button" class="btn btn-outline-success btn-sm">
+        Post
+      </button>
+    </div>
+
+    <div class="card-body p-4">
+      <form
+        [formGroup]="postForm"
+        (ngSubmit)="onSubmit()"
+        autocomplete="off"
+        novalidate
+      >
+
+
         <div class="mb-3">
-          <label class="form-label fw-semibold">Title</label>
+          <label for="title" class="form-label">Title:</label>
           <input
+            id="title"
             type="text"
             class="form-control"
             formControlName="title"
-            placeholder="Enter post title">
-          @if (postForm.get('title')?.invalid && postForm.get('title')?.touched) {
-          <div class="text-danger small">Title is required</div>
-          }
+            placeholder="Enter post title"
+            [class.is-invalid]="title.invalid && title.touched"
+            [class.is-valid]="title.valid && title.touched"
+          />
+          <div class="invalid-feedback">
+            @if (title.errors?.['required']) {
+            <span>Title is required</span>
+            } @else if (title.errors?.['minlength']) {
+            <span>Title must be at least 5 characters</span>
+            } @else if (title.errors?.['maxlength']) {
+            <span>Title should not exceed 150 characters</span>
+            }
+          </div>
         </div>
 
+
         <div class="mb-3">
-          <label class="form-label fw-semibold">Content</label>
+          <label for="categoryId" class="form-label">Category:</label>
+          <select
+            id="categoryId"
+            class="form-select"
+            formControlName="categoryId"
+            [class.is-invalid]="categoryId.invalid && categoryId.touched"
+            [class.is-valid]="categoryId.valid && categoryId.touched"
+          >
+            <option value="" disabled>Select a category</option>
+            @for (cat of categories; track cat.id) {
+            <option [value]="cat.id">{{ cat.name }}</option>
+            }
+          </select>
+          <div class="invalid-feedback">
+            @if (categoryId.errors?.['required']) {
+            <span>Category is required</span>
+            }
+          </div>
+        </div>
+
+
+        <div class="mb-4">
+          <label for="content" class="form-label">Content:</label>
           <textarea
+            id="content"
             class="form-control"
             formControlName="content"
             rows="6"
-            placeholder="Write your post content here...">
-          </textarea>
-          @if (postForm.get('content')?.invalid && postForm.get('content')?.touched) {
-          <div class="text-danger small">Content is required</div>
-          }
-        </div>
-
-        <div class="mb-4">
-          <label class="form-label fw-semibold">Category</label>
-          <select class="form-select" formControlName="categoryId">
-            <option value="">Select a category</option>
-            @for (category of categories; track category.id) {
-            <option [value]="category.id">{{ category.name }}</option>
+            placeholder="Write your post content here..."
+            [class.is-invalid]="content.invalid && content.touched"
+            [class.is-valid]="content.valid && content.touched"
+          ></textarea>
+          <div class="invalid-feedback">
+            @if (content.errors?.['required']) {
+            <span>Content is required</span>
+            } @else if (content.errors?.['maxlength']) {
+            <span>Post content should not exceed 2500 characters</span>
             }
-          </select>
-          @if (postForm.get('categoryId')?.invalid && postForm.get('categoryId')?.touched) {
-          <div class="text-danger small">Category is required</div>
-          }
+          </div>
         </div>
 
-        <div class="d-flex gap-2">
+
+        <div class="d-flex justify-content-end gap-2">
+          <button
+            type="button"
+            class="btn btn-outline-danger"
+            (click)="onClose()"
+          >
+            Close
+          </button>
           <button
             type="submit"
             class="btn btn-success"
-            [disabled]="postForm.invalid">
-            <i class="bi bi-send me-1"></i> Publish
-          </button>
-          <button
-            type="button"
-            class="btn btn-outline-secondary"
-            (click)="router.navigate(['/'])">
-            Cancel
+          >
+            Post message
           </button>
         </div>
+
       </form>
     </div>
+
   </div>
 </div>
